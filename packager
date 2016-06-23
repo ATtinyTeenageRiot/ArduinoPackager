@@ -451,6 +451,9 @@ function check_config_exists()
 			exit 1
 		fi
 	fi
+
+	RELEASE_REPO_DIR="${BOARD_PACKAGE_NAME}"
+
 }
 
 
