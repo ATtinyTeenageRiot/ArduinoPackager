@@ -58,7 +58,7 @@ function generate_platform_template() #version, url, checksum, size
 		" 2> /dev/null
 	else
 		eval "cat <<EOF
-		$(<${cwd}/builder/${TEMPLATE_DIR}/default_platform_template.json)
+		$(<${cwd}/ArduinoPackager/${TEMPLATE_DIR}/default_platform_template.json)
 		" 2> /dev/null
 	fi
 
@@ -76,7 +76,7 @@ function generate_package_template() #platforms
 		" 2> /dev/null
 	else
 		eval "cat <<EOF
-		$(<${cwd}/builder/${TEMPLATE_DIR}/default_package_template.json)
+		$(<${cwd}/ArduinoPackager/${TEMPLATE_DIR}/default_package_template.json)
 		" 2> /dev/null
 	fi
 
