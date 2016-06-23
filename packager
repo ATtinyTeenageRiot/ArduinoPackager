@@ -873,10 +873,3 @@ cat << "asciiart"
 *--------------------------------------------------*
 
 asciiart
-
-
-# echo $wew
-#generate_tools_template
-#make_packages
-
-#generate_boards_template BOARD_LIST
