@@ -72,7 +72,7 @@ function generate_package_template() #platforms
 	if [ "${_template}" != "" ] && [ "${_template}" != "default" ]
 	then
 		eval "cat <<EOF
-		$(<./${TEMPLATE_DIR}/${_template}${TEMPLATE_EXTENSION})
+		$(<./${TEMPLATE_DIR}/${_template})
 		" 2> /dev/null
 	else
 		eval "cat <<EOF
@@ -672,7 +672,7 @@ function make_packages()
 		fi
 	done
 
-	local json_package_output=`generate_package_template "${platform_list}"`
+	local json_package_output=`generate_package_template "${platform_list}" "${BOARD_PACKAGE_TEMPLATE}"`
 	echo "${json_package_output}" > "${RELEASES_DIR}/${RELEASE_REPO_DIR}/${RELEASE_INDEX_JSON_FILENAME}"
 }
 
