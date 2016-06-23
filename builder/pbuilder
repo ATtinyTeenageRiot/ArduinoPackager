@@ -4,7 +4,7 @@ cwd=$(pwd)
 RELEASE_VERSION=()
 TOOLS_LIST=()
 
-DEFAULT_CONFIG_FILE="config.conf"
+DEFAULT_CONFIG_FILE="build.conf"
 
 STAGING_DIR="staging"
 RELEASES_DIR="releases"
