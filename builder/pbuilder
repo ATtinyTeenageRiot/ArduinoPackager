@@ -143,10 +143,11 @@ function generate_platform_template() #version, url, checksum, size
 	then
 		eval "cat <<EOF
 		$(<./${TEMPLATE_DIR}/${_template}${TEMPLATE_EXTENSION})
-		EOF
 		" 2> /dev/null
 	else
-		default_platform_template
+		eval "cat <<EOF
+		$(<${cwd}/builder/${TEMPLATE_DIR}/default_platform_template.json)
+		" 2> /dev/null
 	fi
 
 
@@ -156,15 +157,15 @@ function generate_package_template() #platforms
 {
 	local _platforms=${1}
 	local _template=${2}
-
 	if [ "${_template}" != "" ] && [ "${_template}" != "default" ]
 	then
 		eval "cat <<EOF
 		$(<./${TEMPLATE_DIR}/${_template}${TEMPLATE_EXTENSION})
-		EOF
 		" 2> /dev/null
 	else
-		default_package_template
+		eval "cat <<EOF
+		$(<${cwd}/builder/${TEMPLATE_DIR}/default_package_template.json)
+		" 2> /dev/null
 	fi
 
 }
