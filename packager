@@ -795,8 +795,24 @@ while [ "$1" != "" ]; do
 	        exit
         ;;
         -b | --build | build )
+
 			check_config_exists ${2}
+
+			if [ -d "${RELEASES_DIR}/${RELEASE_REPO_DIR}" ] #if directory exists
+			then
+			echo "build packages!"
+			else
+			echo "fetching ${RELEASE_REPO_GIT_URL}"
+			git_init_release_pages
+			fi
+
+			if check_folder_git "${RELEASES_DIR}/${RELEASE_REPO_DIR}"
+			then
 			make_packages
+			else
+			echo "error check if valid ${RELEASE_REPO_GIT_URL}"
+			fi
+
 			exit
         ;;   
         publish )
@@ -868,6 +884,7 @@ cat << "asciiart"
                      |__/                       
 
               < BUILD _ TOOLS >
+
 *--------------------------------------------------*
 |command - description                             |
 |--------------------------------------------------|
@@ -884,5 +901,11 @@ cat << "asciiart"
 |pull     - sync build tools                       |
 |push     - sync build tools                       |
 *--------------------------------------------------*
+
+How to build and then publish package:
+
+ ./packager build
+ ./packager publish
+
 
 asciiart
