@@ -865,11 +865,11 @@ cat << "asciiart"
 |command - description                             |
 |--------------------------------------------------|
 |initpage - init release github page               |
+|publish  - publish release to git pages           |
+|--------------------------------------------------|
 |add      - add a new release                      |
 |edit     - edit config file                       |
 |build    - fetch remote repo and package board    |
-|--------------------------------------------------|
-|publish  - publish release to git pages           |
 |--------------------------------------------------|
 |info     - get list of release and board url      |
 |list     - get list of release                    |
