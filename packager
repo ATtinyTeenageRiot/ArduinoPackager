@@ -16,6 +16,7 @@ TEMPLATE_PLATFORM_FILE="platform"
 TEMPLATE_PACKAGE_FILE="package"
 TEMPLATE_EXTENSION=".json"
 
+RELEASE_REPO_BRANCH="gh-pages"
 
 # -------------------------------------------------------------------------------------------
 #	Template stuff
@@ -253,7 +254,7 @@ function git_init_release_pages()
 
 	cd ${RELEASES_DIR}
 	
-	git clone --depth 1 ${RELEASE_REPO_URL} ${RELEASE_REPO_DIR}
+	git clone --depth 1 ${RELEASE_REPO_GIT_URL} ${RELEASE_REPO_DIR}
 	cd ${RELEASE_REPO_DIR}
 	git checkout --orphan ${RELEASE_REPO_BRANCH}
 
@@ -452,6 +453,7 @@ function check_config_exists()
 		fi
 	fi
 
+	BOARD_PACKAGE_NAME="${BOARD_NAME}"
 	RELEASE_REPO_DIR="${BOARD_PACKAGE_NAME}"
 	REPO_SOURCE_LOCAL_DIR="${BOARD_PACKAGE_NAME}"
 
@@ -518,8 +520,8 @@ function ADD_DEPENDENCIES()
 {
 	local _package_container=${1}	
 	local _packager=${2}	
-	local _package_name=${3}
-	local _version=${4}
+	local _package_name=${BOARD_PACKAGE_NAME}
+	local _version=${3}
 	local _package_name_clean=$(echo "${_package_name}" | sed 's#\.#\_#g' | sed 's#\-#\_#g')	
 	local _version_clean=$(echo "${_version}" | sed 's#\.#\_#g' | sed 's#\-#\_#g')	
 	local _new_var="${_package_name_clean}_${_version_clean}"
@@ -649,7 +651,7 @@ function make_packages()
 				echo "${_RELEASE_VERSION} use archive from ${_duplicate_archive}"
 
 				local sha_result=`shasum -a 256 ${cwd}/${RELEASES_DIR}/${RELEASE_REPO_DIR}/${RELEASES_BOARD_DIR}/${RELEASE_PREFIX}${_duplicate_archive}${ARCHIVE_EXT} | cut -d ' ' -f 1`
-				platform_list+=`generate_platform_template ${_RELEASE_VERSION} ${RELEASE_FILE_URL}/${RELEASES_BOARD_DIR}/${RELEASE_PREFIX}${_duplicate_archive}${ARCHIVE_EXT} ${sha_result} "${tools_deps}" ${_PLATFORM_TEMPLATE}`
+				platform_list+=`generate_platform_template ${_RELEASE_VERSION} ${RELEASE_PAGE_URL}/${RELEASES_BOARD_DIR}/${RELEASE_PREFIX}${_duplicate_archive}${ARCHIVE_EXT} ${sha_result} "${tools_deps}" ${_PLATFORM_TEMPLATE}`
 
 			fi	
 
@@ -659,12 +661,12 @@ function make_packages()
 			 then
 			 	echo "${_RELEASE_VERSION} exists, skip"
 			 else
-			 	update_release_repo "${REPO_SOURCE_URL}" "${STAGING_DIR}/${REPO_SOURCE_LOCAL_DIR}" "${_COMMIT_HASH}"
+			 	update_release_repo "${REPO_SOURCE_GIT_URL}" "${STAGING_DIR}/${REPO_SOURCE_LOCAL_DIR}" "${_COMMIT_HASH}"
 			 	archive_release_repo "${STAGING_DIR}/${REPO_SOURCE_LOCAL_DIR}" "${RELEASE_PREFIX}${_RELEASE_VERSION}" "${BOARD_ARCH}"
 			 fi	
 
 			local sha_result=`shasum -a 256 ${cwd}/${RELEASES_DIR}/${RELEASE_REPO_DIR}/${RELEASES_BOARD_DIR}/${RELEASE_PREFIX}${_RELEASE_VERSION}${ARCHIVE_EXT} | cut -d ' ' -f 1`
-			platform_list+=`generate_platform_template ${_RELEASE_VERSION} ${RELEASE_FILE_URL}/${RELEASES_BOARD_DIR}/${RELEASE_PREFIX}${_RELEASE_VERSION}${ARCHIVE_EXT} ${sha_result} "${tools_deps}" ${_PLATFORM_TEMPLATE}`
+			platform_list+=`generate_platform_template ${_RELEASE_VERSION} ${RELEASE_PAGE_URL}/${RELEASES_BOARD_DIR}/${RELEASE_PREFIX}${_RELEASE_VERSION}${ARCHIVE_EXT} ${sha_result} "${tools_deps}" ${_PLATFORM_TEMPLATE}`
 
 		fi
 		
@@ -709,7 +711,7 @@ Package:
 Package url:
 Copy paste into arduino package url list
 
-- ${RELEASE_FILE_URL}/${RELEASE_INDEX_JSON_FILENAME}
+- ${RELEASE_PAGE_URL}/${RELEASE_INDEX_JSON_FILENAME}
 
 ------------------------------------------------------------------		
 
