@@ -255,8 +255,15 @@ function git_init_release_pages()
 	cd ${RELEASES_DIR}
 	
 	git clone --depth 1 ${RELEASE_REPO_GIT_URL} ${RELEASE_REPO_DIR}
-	cd ${RELEASE_REPO_DIR}
-	git checkout --orphan ${RELEASE_REPO_BRANCH}
+
+	if check_folder_git "${RELEASE_REPO_DIR}"
+	then
+		cd ${RELEASE_REPO_DIR}
+		git checkout --orphan ${RELEASE_REPO_BRANCH}
+	else
+		echo "error:cant get RELEASE_REPO_GIT_URL.."
+	fi
+
 
 	cd ${cwd}
 
