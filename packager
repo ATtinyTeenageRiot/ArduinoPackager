@@ -802,6 +802,7 @@ while [ "$1" != "" ]; do
 			then
 			echo "build packages!"
 			else
+			mkdir -p "${RELEASES_DIR}"
 			echo "fetching ${RELEASE_REPO_GIT_URL}"
 			git_init_release_pages
 			fi
