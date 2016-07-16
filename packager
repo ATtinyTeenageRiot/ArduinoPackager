@@ -829,10 +829,12 @@ while [ "$1" != "" ]; do
 	        exit
         ;; 
         pull )
+			check_config_exists
 			build_pull_config
 	        exit
         ;;   
         push )
+			check_config_exists
 			build_push_config
 	        exit
         ;;                          
