@@ -817,8 +817,10 @@ while [ "$1" != "" ]; do
 			if check_folder_git "${RELEASES_DIR}/${RELEASE_REPO_DIR}"
 			then
 			make_packages
+			exit 1
 			else
 			echo "error check if valid ${RELEASE_REPO_GIT_URL}"
+			exit 0
 			fi
 
 			exit
