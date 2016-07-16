@@ -773,7 +773,7 @@ while [ "$1" != "" ]; do
 			vi "./${DEFAULT_CONFIG_FILE}" +
 			exit
 		;;		
-        -a | --add | add)
+        add)
 			check_config_exists "./${DEFAULT_CONFIG_FILE}"
 
 			echo "fetching latest config to avoid conflict"
@@ -790,6 +790,13 @@ while [ "$1" != "" ]; do
 			echo "new release added, please use build command to make a new package"
 			exit		
         ;;
+        -a | --add )
+			check_config_exists "./${DEFAULT_CONFIG_FILE}"
+			echo "fetching latest config to avoid conflict"
+			build_pull_config
+			add_new_release ${2} ${3}
+	        exit
+        ;;        
         -h | --help )
 			usage
 	        exit
