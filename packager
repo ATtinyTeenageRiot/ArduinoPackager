@@ -604,7 +604,7 @@ function list_release()
 
 function build_push_config()
 {
-	git add config.conf
+	git add ${CONFIG_FILE}
 	git commit -m "update config"	
 	git push origin master
 }
