@@ -325,6 +325,10 @@ function archive_release_repo() #repo dir, filename
 
 	cd ${cwd}/${_REPO_DIR}
 
+	if check_file_exists "${cwd}/hook_before_archive.sh"; then
+		source "${cwd}/hook_before_archive.sh"
+	fi
+
 	if check_file_exists "${cwd}/exclude.txt"; then
 		tar --exclude-from="${cwd}/exclude.txt" --exclude=".git" --exclude=".DS_Store" --exclude=".gitignore" --exclude=".gitmodules" -c  ${_SOURCE_FILE} | gzip -n > ${cwd}/${RELEASES_DIR}/${RELEASE_REPO_DIR}/${RELEASES_BOARD_DIR}/${_ARCHIVE_FILE}${ARCHIVE_EXT} 
 	else
