@@ -325,7 +325,12 @@ function archive_release_repo() #repo dir, filename
 
 	cd ${cwd}/${_REPO_DIR}
 
-	tar --exclude=".git" --exclude=".DS_Store" --exclude=".gitignore" --exclude=".gitmodules" -c  ${_SOURCE_FILE} | gzip -n > ${cwd}/${RELEASES_DIR}/${RELEASE_REPO_DIR}/${RELEASES_BOARD_DIR}/${_ARCHIVE_FILE}${ARCHIVE_EXT} 
+	if check_file_exists "${cwd}/exclude.txt"; then
+		tar --exclude-from="${cwd}/exclude.txt" --exclude=".git" --exclude=".DS_Store" --exclude=".gitignore" --exclude=".gitmodules" -c  ${_SOURCE_FILE} | gzip -n > ${cwd}/${RELEASES_DIR}/${RELEASE_REPO_DIR}/${RELEASES_BOARD_DIR}/${_ARCHIVE_FILE}${ARCHIVE_EXT} 
+	else
+		tar --exclude=".git" --exclude=".DS_Store" --exclude=".gitignore" --exclude=".gitmodules" -c  ${_SOURCE_FILE} | gzip -n > ${cwd}/${RELEASES_DIR}/${RELEASE_REPO_DIR}/${RELEASES_BOARD_DIR}/${_ARCHIVE_FILE}${ARCHIVE_EXT} 
+	fi
+
 	git log -1 > ${cwd}/${RELEASES_DIR}/${RELEASE_REPO_DIR}/${RELEASES_BOARD_DIR}/${_ARCHIVE_FILE}.sha.txt
 	shasum -a 256 ${cwd}/${RELEASES_DIR}/${RELEASE_REPO_DIR}/${RELEASES_BOARD_DIR}/${_ARCHIVE_FILE}${ARCHIVE_EXT}  | cut -d ' ' -f 1 >> ${cwd}/${RELEASES_DIR}/${RELEASE_REPO_DIR}/${RELEASES_BOARD_DIR}/${_ARCHIVE_FILE}.sha.txt
 	cd "${cwd}"
