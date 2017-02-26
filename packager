@@ -16,7 +16,9 @@ TEMPLATE_PLATFORM_FILE="platform"
 TEMPLATE_PACKAGE_FILE="package"
 TEMPLATE_EXTENSION=".json"
 
+if [ -z "$RELEASE_REPO_BRANCH" ]; then
 RELEASE_REPO_BRANCH="gh-pages"
+fi	
 
 # -------------------------------------------------------------------------------------------
 #	Template stuff
